@@ -230,6 +230,41 @@ a {
     padding-block: 44px 60px;
 }
 
+.year-result-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.year-result-item {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.year-result-title {
+    display: block;
+    color: var(--navy);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.2rem, 2.1vw, 1.5rem);
+    line-height: 1.35;
+    text-decoration: none;
+}
+
+a.year-result-title:hover,
+a.year-result-title:focus-visible {
+    color: var(--gold-dark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.year-result-date {
+    display: block;
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
 .site-footer {
     padding: 22px 0;
     color: #dfe5eb;

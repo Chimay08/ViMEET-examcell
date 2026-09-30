@@ -8,7 +8,102 @@
 </head>
 <body>
     <header class="site-header"><div class="container"><p class="college-label">Official Examination Portal</p><h1>VISHWANIKETAN</h1><p class="site-subtitle">Department of Examination Cell</p></div></header>
-    <main class="container year-page"><section class="results-section"><div class="section-heading"><h2>Examination Results — 2017</h2></div><!-- 2017 REAL RESULTS WILL BE ADDED HERE --><ul class="result-list"></ul></section></main>
+    <main class="container year-page">
+        <section class="results-section">
+            <div class="section-heading">
+                <h2>Examination Results — 2017</h2>
+                <span class="result-count" id="result-count">99 Results</span>
+            </div>
+            <ul class="year-result-list" id="results-2017"></ul>
+        </section>
+    </main>
     <footer class="site-footer"><div class="container"><p>&copy; 2026 Vishwaniketan Department of Examination Cell</p></div></footer>
+    <script>
+        function parseCsv(text) {
+            var rows = [];
+            var row = [];
+            var field = '';
+            var quoted = false;
+
+            for (var index = 0; index < text.length; index += 1) {
+                var character = text[index];
+                var nextCharacter = text[index + 1];
+
+                if (character === '"' && quoted && nextCharacter === '"') {
+                    field += '"';
+                    index += 1;
+                } else if (character === '"') {
+                    quoted = !quoted;
+                } else if (character === ',' && !quoted) {
+                    row.push(field);
+                    field = '';
+                } else if ((character === '\n' || character === '\r') && !quoted) {
+                    if (character === '\r' && nextCharacter === '\n') index += 1;
+                    row.push(field);
+                    if (row.some(function (value) { return value !== ''; })) rows.push(row);
+                    row = [];
+                    field = '';
+                } else {
+                    field += character;
+                }
+            }
+
+            if (field || row.length) {
+                row.push(field);
+                rows.push(row);
+            }
+
+            return rows;
+        }
+
+        function displayDate(value) {
+            var parts = value.slice(0, 10).split('-').map(Number);
+            return new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'UTC'
+            }).format(new Date(Date.UTC(parts[0], parts[1] - 1, parts[2])));
+        }
+
+        fetch('../data/results-2017.csv')
+            .then(function (response) {
+                if (!response.ok) throw new Error('Unable to load results');
+                return response.text();
+            })
+            .then(function (csvText) {
+                var rows = parseCsv(csvText).slice(1);
+                var resultList = document.getElementById('results-2017');
+                document.getElementById('result-count').textContent = rows.length + ' Results';
+
+                rows.forEach(function (record) {
+                    var title = record[0];
+                    var date = record[1];
+                    var url = record[2];
+                    var item = document.createElement('li');
+                    var titleElement = url ? document.createElement('a') : document.createElement('span');
+                    var dateElement = document.createElement('time');
+
+                    item.className = 'year-result-item';
+                    titleElement.className = 'year-result-title';
+                    titleElement.textContent = title;
+
+                    if (url) {
+                        titleElement.href = url;
+                        titleElement.target = '_blank';
+                        titleElement.rel = 'noopener noreferrer';
+                    }
+
+                    dateElement.className = 'year-result-date';
+                    dateElement.dateTime = date;
+                    dateElement.textContent = displayDate(date);
+                    item.append(titleElement, dateElement);
+                    resultList.appendChild(item);
+                });
+            })
+            .catch(function () {
+                document.getElementById('result-count').textContent = 'Results unavailable';
+            });
+    </script>
 </body>
 </html>
