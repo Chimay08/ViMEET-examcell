@@ -206,41 +206,85 @@ a {
     font-size: 0.75rem;
 }
 
-.archive ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.archive > ul > li + li {
-    margin-top: 20px;
-    padding-top: 16px;
+.archive-year + .archive-year {
     border-top: 1px solid var(--border);
 }
 
-.archive strong {
-    display: block;
-    margin-bottom: 7px;
+.year-toggle {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
     color: var(--gold-dark);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
     font-family: Georgia, "Times New Roman", serif;
     font-size: 1.08rem;
+    font-weight: 700;
+    text-align: left;
 }
 
-.archive li ul {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px 12px;
-    padding-left: 12px;
+.year-toggle:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.arrow {
+    margin-left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.7rem;
+}
+
+.year-results {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+
+.year-results.is-open {
+    max-height: 900px;
+    opacity: 1;
+}
+
+.year-results ul {
+    margin: 0 0 16px;
+    padding: 0 0 0 12px;
     border-left: 2px solid var(--border);
+    list-style: none;
 }
 
-.archive li li {
+.year-results li + li {
+    margin-top: 12px;
+}
+
+.year-results a,
+.year-results span {
+    display: block;
+}
+
+.year-results a {
+    color: var(--navy);
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.year-results span {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+.year-results li {
     font-size: 0.88rem;
 }
 
-.archive a {
-    color: var(--navy);
-    text-decoration: none;
+.year-results a:hover,
+.year-results a:focus-visible {
+    color: #49360f;
+    text-decoration: underline;
 }
 
 .site-footer {
@@ -316,13 +360,4 @@ a {
         width: 100%;
     }
 
-    .archive li ul {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 380px) {
-    .archive li ul {
-        grid-template-columns: 1fr;
-    }
 }
