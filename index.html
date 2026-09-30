@@ -41,76 +41,16 @@
 
             <nav class="sidebar-section archive" aria-labelledby="archive-heading">
                 <h2 id="archive-heading">Blog Archive</h2>
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2026">
-                        <span class="year-title">2026</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2026">
-                        <!-- ADD 2026 RESULTS HERE -->
-                        <ul></ul>
-                    </div>
-                </div>
-
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2025">
-                        <span class="year-title">2025</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2025">
-                        <!-- ADD 2025 RESULTS HERE -->
-                        <ul></ul>
-                    </div>
-                </div>
-
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2024">
-                        <span class="year-title">2024</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2024">
-                        <!-- ADD 2024 RESULTS HERE -->
-                        <ul></ul>
-                    </div>
-                </div>
-
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2023">
-                        <span class="year-title">2023</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2023"><ul><!-- ADD 2023 RESULTS HERE --></ul></div>
-                </div>
-
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2022">
-                        <span class="year-title">2022</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2022"><ul><!-- ADD 2022 RESULTS HERE --></ul></div>
-                </div>
-
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2021">
-                        <span class="year-title">2021</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2021"><ul><!-- ADD 2021 RESULTS HERE --></ul></div>
-                </div>
-
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2020">
-                        <span class="year-title">2020</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2020"><ul><!-- ADD 2020 RESULTS HERE --></ul></div>
-                </div>
-
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2019">
-                        <span class="year-title">2019</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2019"><ul><!-- ADD 2019 RESULTS HERE --></ul></div>
-                </div>
-
-                <div class="archive-year">
-                    <button class="year-toggle" type="button" aria-expanded="false" aria-controls="archive-2018">
-                        <span class="year-title">2018</span><span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="year-results" id="archive-2018"><ul>018,,Result SE (Electrical Engineering_R 2017)_Sem-III_(CBCS)_Dec-2017,https://accounts.google.com/ServiceLogin?service=wise&passive=1209600&osid=1&continue=https://drive.google.com/file/d/1EFjJ9MOlhK-P-GMWly5_iOywfhKLPJ2a/view?usp%3Dsharing&followup=https://drive.google.com/file/d/1EFjJ9MOlhK-P-GMWly5_iOywfhKLPJ2a/view?usp%3Dsharing&ec=GAZAGQ</ul></div>
+                <div class="archive-links">
+                    <a href="results/2026.html">2026</a>
+                    <a href="results/2025.html">2025</a>
+                    <a href="results/2024.html">2024</a>
+                    <a href="results/2023.html">2023</a>
+                    <a href="results/2022.html">2022</a>
+                    <a href="results/2021.html">2021</a>
+                    <a href="results/2020.html">2020</a>
+                    <a href="results/2019.html">2019</a>
+                    <a href="results/2018.html">2018</a>
                 </div>
             </nav>
         </aside>
@@ -121,15 +61,5 @@
             <p>&copy; 2026 Vishwaniketan Department of Examination Cell</p>
         </div>
     </footer>
-    <script>
-        document.querySelectorAll('.year-toggle').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var isOpen = button.getAttribute('aria-expanded') === 'true';
-                button.setAttribute('aria-expanded', String(!isOpen));
-                button.querySelector('.arrow').textContent = isOpen ? '▼' : '▲';
-                document.getElementById(button.getAttribute('aria-controls')).classList.toggle('is-open', !isOpen);
-            });
-        });
-    </script>
 </body>
 </html>
