@@ -8,7 +8,52 @@
 </head>
 <body>
     <header class="site-header"><div class="container"><p class="college-label">Official Examination Portal</p><h1>VISHWANIKETAN</h1><p class="site-subtitle">Department of Examination Cell</p></div></header>
-    <main class="container year-page"><section class="results-section"><div class="section-heading"><h2>Examination Results — 2017</h2></div><!-- 2017 REAL RESULTS WILL BE ADDED HERE --><ul class="result-list"></ul></section></main>
+    <main class="container year-page">
+        <section class="results-section">
+            <div class="section-heading">
+                <h2>Examination Results — 2017</h2>
+                <span class="result-count" id="result-count">99 Results</span>
+            </div>
+            <ul class="year-result-list" id="results-2017"></ul>
+        </section>
+    </main>
     <footer class="site-footer"><div class="container"><p>&copy; 2026 Vishwaniketan Department of Examination Cell</p></div></footer>
+    <script src="../data/results-2017.js"></script>
+    <script>
+        function displayDate(value) {
+            var parts = value.slice(0, 10).split('-').map(Number);
+            return new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'UTC'
+            }).format(new Date(Date.UTC(parts[0], parts[1] - 1, parts[2])));
+        }
+
+        var resultList = document.getElementById('results-2017');
+        document.getElementById('result-count').textContent = window.results2017.length + ' Results';
+
+        window.results2017.forEach(function (record) {
+            var item = document.createElement('li');
+            var titleElement = record.url ? document.createElement('a') : document.createElement('span');
+            var dateElement = document.createElement('time');
+
+            item.className = 'year-result-item';
+            titleElement.className = 'year-result-title';
+            titleElement.textContent = record.title;
+
+            if (record.url) {
+                titleElement.href = record.url;
+                titleElement.target = '_blank';
+                titleElement.rel = 'noopener noreferrer';
+            }
+
+            dateElement.className = 'year-result-date';
+            dateElement.dateTime = record.date;
+            dateElement.textContent = displayDate(record.date);
+            item.append(titleElement, dateElement);
+            resultList.appendChild(item);
+        });
+    </script>
 </body>
 </html>
