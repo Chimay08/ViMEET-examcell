@@ -18,44 +18,8 @@
         </section>
     </main>
     <footer class="site-footer"><div class="container"><p>&copy; 2026 Vishwaniketan Department of Examination Cell</p></div></footer>
+    <script src="../data/results-2017.js"></script>
     <script>
-        function parseCsv(text) {
-            var rows = [];
-            var row = [];
-            var field = '';
-            var quoted = false;
-
-            for (var index = 0; index < text.length; index += 1) {
-                var character = text[index];
-                var nextCharacter = text[index + 1];
-
-                if (character === '"' && quoted && nextCharacter === '"') {
-                    field += '"';
-                    index += 1;
-                } else if (character === '"') {
-                    quoted = !quoted;
-                } else if (character === ',' && !quoted) {
-                    row.push(field);
-                    field = '';
-                } else if ((character === '\n' || character === '\r') && !quoted) {
-                    if (character === '\r' && nextCharacter === '\n') index += 1;
-                    row.push(field);
-                    if (row.some(function (value) { return value !== ''; })) rows.push(row);
-                    row = [];
-                    field = '';
-                } else {
-                    field += character;
-                }
-            }
-
-            if (field || row.length) {
-                row.push(field);
-                rows.push(row);
-            }
-
-            return rows;
-        }
-
         function displayDate(value) {
             var parts = value.slice(0, 10).split('-').map(Number);
             return new Intl.DateTimeFormat('en-US', {
@@ -66,44 +30,30 @@
             }).format(new Date(Date.UTC(parts[0], parts[1] - 1, parts[2])));
         }
 
-        fetch('../data/results-2017.csv')
-            .then(function (response) {
-                if (!response.ok) throw new Error('Unable to load results');
-                return response.text();
-            })
-            .then(function (csvText) {
-                var rows = parseCsv(csvText).slice(1);
-                var resultList = document.getElementById('results-2017');
-                document.getElementById('result-count').textContent = rows.length + ' Results';
+        var resultList = document.getElementById('results-2017');
+        document.getElementById('result-count').textContent = window.results2017.length + ' Results';
 
-                rows.forEach(function (record) {
-                    var title = record[0];
-                    var date = record[1];
-                    var url = record[2];
-                    var item = document.createElement('li');
-                    var titleElement = url ? document.createElement('a') : document.createElement('span');
-                    var dateElement = document.createElement('time');
+        window.results2017.forEach(function (record) {
+            var item = document.createElement('li');
+            var titleElement = record.url ? document.createElement('a') : document.createElement('span');
+            var dateElement = document.createElement('time');
 
-                    item.className = 'year-result-item';
-                    titleElement.className = 'year-result-title';
-                    titleElement.textContent = title;
+            item.className = 'year-result-item';
+            titleElement.className = 'year-result-title';
+            titleElement.textContent = record.title;
 
-                    if (url) {
-                        titleElement.href = url;
-                        titleElement.target = '_blank';
-                        titleElement.rel = 'noopener noreferrer';
-                    }
+            if (record.url) {
+                titleElement.href = record.url;
+                titleElement.target = '_blank';
+                titleElement.rel = 'noopener noreferrer';
+            }
 
-                    dateElement.className = 'year-result-date';
-                    dateElement.dateTime = date;
-                    dateElement.textContent = displayDate(date);
-                    item.append(titleElement, dateElement);
-                    resultList.appendChild(item);
-                });
-            })
-            .catch(function () {
-                document.getElementById('result-count').textContent = 'Results unavailable';
-            });
+            dateElement.className = 'year-result-date';
+            dateElement.dateTime = record.date;
+            dateElement.textContent = displayDate(record.date);
+            item.append(titleElement, dateElement);
+            resultList.appendChild(item);
+        });
     </script>
 </body>
 </html>
