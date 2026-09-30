@@ -339,3 +339,74 @@ a.year-result-title:focus-visible {
     }
 
 }
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1d2f43;
+    background: #f5f7fa;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; }
+
+.container {
+    width: min(1120px, calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+.site-header {
+    padding: 1.25rem 0;
+    color: #fff;
+    background: #086fa8;
+}
+
+.site-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.college-logo {
+    display: block;
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+.college-label,
+.site-subtitle {
+    margin: 0;
+}
+
+.college-label {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    opacity: .82;
+}
+
+.site-header h1 {
+    margin: .2rem 0;
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    letter-spacing: .05em;
+}
+
+.page-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.site-footer {
+    padding: 1rem 0;
+    color: #fff;
+    background: #1d2f43;
+}
+
+@media (max-width: 700px) {
+    .page-layout { grid-template-columns: 1fr; }
+    .college-logo { width: 72px; height: 72px; }
+}
