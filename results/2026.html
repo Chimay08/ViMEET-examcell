@@ -20,6 +20,9 @@
     <script src="../data/results-2026.js"></script>
     <script>
         function displayDate(value) {
+            if (!value) {
+                return 'Date not available';
+            }
             var parts = value.slice(0, 10).split('-').map(Number);
             return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(parts[0], parts[1] - 1, parts[2])));
         }
@@ -36,7 +39,9 @@
             title.target = '_blank';
             title.rel = 'noopener noreferrer';
             date.className = 'year-result-date';
-            date.dateTime = record.date;
+            if (record.date) {
+                date.dateTime = record.date;
+            }
             date.textContent = displayDate(record.date);
             item.append(title, date);
             resultList.appendChild(item);
@@ -44,5 +49,4 @@
     </script>
 </body>
 </html>
-
 
