@@ -27,23 +27,18 @@
         <section class="results-section" aria-labelledby="results-heading">
             <div class="section-heading">
                 <h2 id="results-heading">Latest Results</h2>
+                <form class="search-form" action="#" role="search">
+                    <label class="visually-hidden" for="blog-search">Search examination results</label>
+                    <input id="blog-search" type="search" placeholder="Search results">
+                    <button type="submit">Search</button>
+                </form>
                 <span class="result-count" id="latest-result-count">60 Results</span>
             </div>
 
             <ul class="result-list" id="latest-results"></ul>
         </section>
 
-        <aside class="sidebar" aria-label="Result search and blog archive">
-            <section class="sidebar-section search-section">
-                <h2>Search Your Result</h2>
-                <form class="search-form" action="#" role="search">
-                    <label class="visually-hidden" for="blog-search">Search examination results</label>
-                    <input id="blog-search" type="search" placeholder="Search this blog">
-                    <button type="submit">Search</button>
-                </form>
-                <p class="search-note">Search will be available soon.</p>
-            </section>
-
+        <aside class="sidebar" aria-label="Blog archive">
             <nav class="sidebar-section archive" aria-labelledby="archive-heading">
                 <h2 id="archive-heading">Blog Archive</h2>
                 <div class="archive-links">
@@ -70,6 +65,9 @@
     <script src="data/results-2026.js"></script>
     <script>
         function displayDate(value) {
+            if (!value) {
+                return 'Date not available';
+            }
             var parts = value.slice(0, 10).split('-').map(Number);
             return new Intl.DateTimeFormat('en-US', {
                 year: 'numeric',
@@ -80,7 +78,13 @@
         }
 
         var latestResults = document.getElementById('latest-results');
-        document.getElementById('latest-result-count').textContent = window.results2026.length + ' Results';
+        var resultCount = document.getElementById('latest-result-count');
+        var searchForm = document.querySelector('.search-form');
+        var searchInput = document.getElementById('blog-search');
+
+        function updateResultCount(visibleResults) {
+            resultCount.textContent = visibleResults + (visibleResults === 1 ? ' Result' : ' Results');
+        }
 
         window.results2026.forEach(function (record) {
             var item = document.createElement('li');
@@ -93,7 +97,9 @@
             item.className = 'result-item';
             title.textContent = record.title;
             date.className = 'result-date';
-            time.dateTime = record.date;
+            if (record.date) {
+                time.dateTime = record.date;
+            }
             time.textContent = displayDate(record.date);
             link.className = 'result-link';
             link.href = record.url;
@@ -105,6 +111,28 @@
             item.appendChild(article);
             latestResults.appendChild(item);
         });
+
+        function filterResults() {
+            var query = searchInput.value.trim().toLowerCase();
+            var visibleResults = 0;
+
+            latestResults.querySelectorAll('.result-item').forEach(function (item) {
+                var matches = item.textContent.toLowerCase().includes(query);
+                item.hidden = !matches;
+                if (matches) {
+                    visibleResults += 1;
+                }
+            });
+
+            updateResultCount(visibleResults);
+        }
+
+        searchForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            filterResults();
+        });
+        searchInput.addEventListener('input', filterResults);
+        updateResultCount(window.results2026.length);
     </script>
 </body>
 </html>
